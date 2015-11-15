@@ -100,4 +100,14 @@ class StatesController extends AppController {
 		$this->Session->setFlash(__('Region was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
+	
+	/**
+	 * Get a list of states from the given country to be used in the Ajax chain select.
+	 * @param unknown $country
+	 */
+	public function list_by_country($country) {
+	    $states = $this->State->findListByCountry($country);
+	    $this->layout = 'ajax';
+	    $this->set('states',$states);
+	}
 }
