@@ -7,6 +7,11 @@ App::uses('AppController', 'Controller');
  */
 class StatesController extends AppController {
 
+    public function beforeFilter() {
+        parent::beforeFilter();
+        $this->Auth->allow('list_by_country');
+    }
+    
 /**
  * admin_index method
  *
