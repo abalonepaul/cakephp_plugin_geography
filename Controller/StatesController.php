@@ -68,7 +68,7 @@ class StatesController extends AppController {
 		if (!$this->Region->exists()) {
 			throw new NotFoundException(__('Invalid region'));
 		}
-		if ($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is(array('post','put'))) {
 			if ($this->Region->save($this->request->data)) {
 				$this->Session->setFlash(__('The region has been saved'));
 				$this->redirect(array('action' => 'index'));

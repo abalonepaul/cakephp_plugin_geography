@@ -61,7 +61,7 @@ class CountriesController extends AppController {
 		if (!$this->Country->exists()) {
 			throw new NotFoundException(__('Invalid country'));
 		}
-		if ($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is(array('post','put'))) {
 			if ($this->Country->save($this->request->data)) {
 				$this->Session->setFlash(__('The country has been saved'));
 				$this->redirect(array('action' => 'index'));
