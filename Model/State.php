@@ -117,7 +117,7 @@ class State extends GeographyAppModel {
      */
     public function afterSave($created) {
         parent::afterSave($created);
-        Cache::clearGroup('geography');
+        Cache::clearGroup('state','geography');
     }
     /** 
      * Clear the cache(non-PHPdoc)
@@ -125,7 +125,7 @@ class State extends GeographyAppModel {
      */
     public function afterDelete() {
         parent::afterDelete();
-        Cache::clearGroup('geography');
+        Cache::clearGroup('state','geography');
     }
     
 

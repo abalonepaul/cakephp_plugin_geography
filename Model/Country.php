@@ -95,7 +95,7 @@ class Country extends GeographyAppModel {
      */
     public function afterSave($created) {
         parent::afterSave($created);
-        Cache::clearGroup('geography');
+        Cache::delete('_geography_country_list', 'geography');
         $this->findList();
     }
     /**
@@ -104,7 +104,7 @@ class Country extends GeographyAppModel {
      */
     public function afterDelete() {
         parent::afterDelete();
-        Cache::clearGroup('geography');
+        Cache::delete('_geography_country_list', 'geography');
         $this->findList();
     }
     
