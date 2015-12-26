@@ -5,5 +5,5 @@ Cache::config('geography', array(
 'path' => CACHE . 'persistent' . DS,
 'serialize' => (Configure::read('Application.cacheEngine') === 'File'),
 'duration' => Configure::read('Application.cacheDuration'),
-'groups' => array('geography')
+'groups' => array('state','country')
 ));
