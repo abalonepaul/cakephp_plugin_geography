@@ -74,5 +74,38 @@ class Country extends GeographyAppModel {
             'counterQuery' => ''
         )
     );
+    
+    /** 
+     * Find the list of Countries. Get the cached version first.
+     * @return Ambigous <mixed, boolean, multitype:, NULL, unknown>
+     */
+    public function findList() {
+        $countries = Cache::read('_geography_country_list', 'geography');
+        if (empty($countries)) {
+            $countries = $this->find('list');
+            Cache::write('_geography_country_list',$countries, 'geography');
+        }
+        return $countries;
+        
+    }
 
+    /**
+     * Clear the cache and reset it.
+     * @see Model::afterSave()
+     */
+    public function afterSave($created) {
+        parent::afterSave($created);
+        Cache::clearGroup('geography');
+        $this->findList();
+    }
+    /**
+     * Clear the cache and reset it.
+     * @see Model::afterDelete()
+     */
+    public function afterDelete() {
+        parent::afterDelete();
+        Cache::clearGroup('geography');
+        $this->findList();
+    }
+    
 }

@@ -88,18 +88,45 @@ class State extends GeographyAppModel {
      * @return Ambigous <multitype:, NULL, unknown>
      */
     public function findListByCountry($country = null) {
-        if (is_numeric($country)) {
-            $countryId = $country;
-        } else {
-            $countryId = $this->Country->field('id',array(
-                'OR' => array(
-                    'name' => $country,
-                    'abbreviation' => $country
-                )
-            ));
+        $states = Cache::read('_geography_' . $country . '_states_list', 'geography');
+        if (empty($states)) {
+            if (is_numeric($country)) {
+                $countryId = $country;
+            } else {
+                $countryId = Cache::read('_geography_' . $country . '_id', 'geography');
+                if (empty($countryId)) {
+                $countryId = $this->Country->field('id',array(
+                    'OR' => array(
+                        'name' => $country,
+                        'abbreviation' => $country
+                    )
+                ));
+                Cache::write('_geography_' . $country . '_id',$countryId, 'geography');
+                }
+            
+            $states = $this->find('list',array('conditions' => array('country_id' => $countryId)));
+            Cache::write('_geography_' . $country . '_states_list',$states, 'geography');
+            }
         }
-        return $this->find('list',array('conditions' => array('country_id' => $countryId)));
+        return $states;
     }
 
+    /** 
+     * Clear the cache
+     * @see Model::afterSave()
+     */
+    public function afterSave($created) {
+        parent::afterSave($created);
+        Cache::clearGroup('geography');
+    }
+    /** 
+     * Clear the cache(non-PHPdoc)
+     * @see Model::afterDelete()
+     */
+    public function afterDelete() {
+        parent::afterDelete();
+        Cache::clearGroup('geography');
+    }
+    
 
 }

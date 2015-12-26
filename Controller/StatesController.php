@@ -52,7 +52,7 @@ class StatesController extends AppController {
 				$this->Session->setFlash(__('The region could not be saved. Please, try again.'));
 			}
 		}
-		$countries = $this->Region->Country->find('list');
+		$countries = $this->Region->Country->findList();
 		$this->set(compact('countries'));
 	}
 
@@ -78,7 +78,7 @@ class StatesController extends AppController {
 		} else {
 			$this->request->data = $this->Region->read(null, $id);
 		}
-		$countries = $this->Region->Country->find('list');
+		$countries = $this->Region->Country->findList();
 		$this->set(compact('countries'));
 	}
 
