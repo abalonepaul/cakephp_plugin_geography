@@ -1,9 +1,9 @@
 <?php 
 Cache::config('geography', array(
-'engine' => $engine,
-'prefix' => $prefix,
+'engine' => Configure::read('Application.cacheEngine'),
+'prefix' => Configure::read('Application.cachePrefix'),
 'path' => CACHE . 'persistent' . DS,
-'serialize' => ($engine === 'File'),
-'duration' => $duration,
+'serialize' => (Configure::read('Application.cacheEngine') === 'File'),
+'duration' => Configure::read('Application.cacheDuration'),
 'groups' => array('geography')
 ));
