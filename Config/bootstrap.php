@@ -1,5 +1,5 @@
 <?php 
-Cache::config('Geography', array(
+Cache::config('geography', array(
 'engine' => $engine,
 'prefix' => $prefix . 'acl',
 'path' => CACHE . 'persistent' . DS,
