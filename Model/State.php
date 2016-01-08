@@ -103,10 +103,10 @@ class State extends GeographyAppModel {
                 ));
                 Cache::write('_geography_' . Inflector::underscore($country) . '_id',$countryId, 'geography');
                 }
-            
+            }            
             $states = $this->find('list',array('conditions' => array('country_id' => $countryId)));
             Cache::write('_geography_' . Inflector::underscore($country) . '_states_list',$states, 'geography');
-            }
+
         }
         return $states;
     }
@@ -115,9 +115,9 @@ class State extends GeographyAppModel {
      * Clear the cache
      * @see Model::afterSave()
      */
-    public function afterSave($created) {
-        parent::afterSave($created);
-        Cache::clearGroup('state','geography');
+    public function afterSave($created, $options = array()) {
+        parent::afterSave($created, $options);
+        Cache::clearGroup('geography');
     }
     /** 
      * Clear the cache(non-PHPdoc)
@@ -125,7 +125,7 @@ class State extends GeographyAppModel {
      */
     public function afterDelete() {
         parent::afterDelete();
-        Cache::clearGroup('state','geography');
+        Cache::clearGroup('geography');
     }
     
 
