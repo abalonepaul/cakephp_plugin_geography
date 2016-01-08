@@ -244,7 +244,6 @@ $this->_currentOptions = $this->_defaultOptions;
 public function apiUrl($sensor = false, $api = null, $language = null, $append = null) {
 $url = $this->_protocol() . self::API;
 
-//$url .= 'sensor=' . ($sensor ? 'true' : 'false');
 if (!empty($language)) {
 $url .= '&language='.$language;
 }
