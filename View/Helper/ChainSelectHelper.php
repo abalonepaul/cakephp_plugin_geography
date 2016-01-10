@@ -35,7 +35,15 @@ protected $defaultCountry = '204'; //US
 
 
 public function country($fieldName, $attributes = array()) {
-    $targetId = $this->Form->model() . Inflector::camelize(str_replace('country', 'state',$fieldName));
+    if(strpos($fieldName, '.') !== false) {
+        $field = explode('.', $fieldName);
+        $model = $field[0];
+        $parsedFieldName = $field[1];
+    } else {
+        $model = $this->Form->model(); 
+        $parsedFieldName = $fieldName;
+    }
+    $targetId = $model . Inflector::camelize(str_replace('country', 'state',$parsedFieldName));
     $inputAttributes = array('escape' => false, 'empty' => 'Select a Country', 'onchange' => "get_states(this,{$targetId})");
     $attributes = Hash::merge($attributes,$inputAttributes);
     echo $this->Form->input($fieldName,$attributes);
