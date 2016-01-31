@@ -49,9 +49,9 @@ public function country($fieldName, $attributes = array()) {
     echo $this->Form->input($fieldName,$attributes);
 }
 
-public function state($fieldName) {
+public function state($fieldName, $options) {
     
-    echo $this->Form->input($fieldName);
+    echo $this->Form->input($fieldName, $options);
     
 }
 
