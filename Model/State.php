@@ -87,8 +87,12 @@ class State extends GeographyAppModel {
      * @param string $country
      * @return Ambigous <multitype:, NULL, unknown>
      */
-    public function findListByCountry($country = null) {
-        $states = Cache::read('_geography_' . Inflector::underscore($country) . '_states_list', 'geography');
+    public function findListByCountry($country = null,$keys = null) {
+        if ($keys != null) {
+            $states = Cache::read('_geography_' . $keys . '_' . Inflector::underscore($country) . '_states_list', 'geography');
+        } else {
+            $states = Cache::read('_geography_' . Inflector::underscore($country) . '_states_list', 'geography');
+        }
         if (empty($states)) {
             if (is_numeric($country)) {
                 $countryId = $country;
@@ -103,8 +107,14 @@ class State extends GeographyAppModel {
                 ));
                 Cache::write('_geography_' . Inflector::underscore($country) . '_id',$countryId, 'geography');
                 }
+            }
+            if ($keys != null) {
+                $fields = array($keys,'name');
+            } else {
+                $fields = array('id','name');
             }            
-            $states = $this->find('list',array('conditions' => array('country_id' => $countryId)));
+            $states = $this->find('list',array(
+                'fields' => $fields, 'conditions' => array('country_id' => $countryId)));
             Cache::write('_geography_' . Inflector::underscore($country) . '_states_list',$states, 'geography');
 
         }

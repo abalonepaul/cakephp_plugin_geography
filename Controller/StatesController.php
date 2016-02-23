@@ -110,8 +110,9 @@ class StatesController extends AppController {
 	 * Get a list of states from the given country to be used in the Ajax chain select.
 	 * @param unknown $country
 	 */
-	public function list_by_country($country) {
-	    $states = $this->State->findListByCountry($country);
+	public function list_by_country($country, $keys = null) {
+	    $states = $this->State->findListByCountry($country,$keys);
+	     
 	    $this->layout = 'ajax';
 	    $this->set('states',$states);
 	}
